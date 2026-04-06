@@ -3,7 +3,7 @@ import {getTranslations} from 'next-intl/server';
 import Link from 'next/link';
 import LeadForm from '@/components/forms/LeadForm';
 import { ShieldCheck, Clock, Layers, Star, CheckCircle2, TrendingUp, ShieldAlert, GraduationCap, Banknote, Terminal, HeartHandshake } from 'lucide-react';
-import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
+
 
 export default async function HomePage({
   params
@@ -273,8 +273,7 @@ export default async function HomePage({
         </div>
       </section>
       
-      {/* FLOATING ACTION BUTTON */}
-      <FloatingWhatsApp tooltip={tHero('cta_whatsapp')} />
+
 
     </div>
   );

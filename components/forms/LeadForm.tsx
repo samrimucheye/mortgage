@@ -5,6 +5,7 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {useState} from 'react';
+import ConsentCheckbox from './ConsentCheckbox';
 
 export default function LeadForm() {
   const t = useTranslations('Contact');
@@ -14,22 +15,29 @@ export default function LeadForm() {
     name: z.string().min(2, {message: t('validation.name_required')}),
     phone: z.string().regex(/^[0-9+\-()\s]{9,15}$/, {message: t('validation.phone_invalid')}),
     email: z.string().email().optional().or(z.literal('')),
-    message: z.string().optional()
+    message: z.string().optional(),
+    consent: z.boolean().refine(val => val === true, {
+      message: "חובה לאשר את מדיניות הפרטיות"
+    })
   });
 
   type FormValues = z.infer<typeof formSchema>;
 
   const {register, handleSubmit, formState: {errors}, reset} = useForm<FormValues>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      consent: false
+    }
   });
 
   const onSubmit = async (data: FormValues) => {
     setStatus('loading');
     try {
+      const payload = { ...data, consentDate: new Date().toISOString() };
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error('Failed to submit');
       setStatus('success');
@@ -87,6 +95,8 @@ export default function LeadForm() {
               className="w-full p-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary outline-none transition resize-none" 
             />
           </div>
+
+          <ConsentCheckbox register={register} error={errors.consent?.message as string | undefined} />
 
           {status === 'error' && <p className="text-red-500 text-sm text-center">{t('error')}</p>}
 

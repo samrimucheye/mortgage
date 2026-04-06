@@ -23,6 +23,8 @@ const LeadSchema = new mongoose.Schema({
   phone: { type: String, required: true },
   email: { type: String },
   message: { type: String },
+  consent: { type: Boolean, required: true, default: false },
+  consentDate: { type: Date },
   status: { 
     type: String, 
     enum: ['new', 'contacted', 'converted'],

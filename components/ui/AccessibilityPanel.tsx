@@ -1,0 +1,134 @@
+'use client';
+
+import { useState } from 'react';
+import { useAccessibility } from '@/components/providers/AccessibilityProvider';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Type, 
+  ZoomIn, 
+  ZoomOut, 
+  Eye, 
+  EyeOff, 
+  CircleDot, 
+  Link as LinkIcon, 
+  Play, 
+  Underline,
+  RotateCcw,
+  X
+} from 'lucide-react';
+import Link from 'next/link';
+
+export default function AccessibilityPanel() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { 
+    state, 
+    toggleHighContrast, 
+    toggleNegativeContrast, 
+    toggleGrayscale, 
+    toggleHighlightLinks, 
+    toggleReadableFont, 
+    toggleDisableAnimations, 
+    toggleUnderlineLinks, 
+    increaseFontSize, 
+    decreaseFontSize, 
+    resetAll 
+  } = useAccessibility();
+
+  const togglePanel = () => setIsOpen(!isOpen);
+
+  // Reusable button component
+  const A11yButton = ({ active, onClick, icon: Icon, label }: { active?: boolean, onClick: () => void, icon: any, label: string }) => (
+    <button 
+      onClick={onClick}
+      className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border text-sm transition-colors text-center gap-2 ${
+        active 
+        ? 'bg-primary text-primary-foreground border-primary shadow-md' 
+        : 'bg-card text-card-foreground border-border hover:bg-muted'
+      }`}
+      aria-pressed={active}
+      aria-label={label}
+    >
+      <Icon size={24} />
+      <span className="font-medium text-xs sm:text-sm leading-tight max-w-[80px]">{label}</span>
+    </button>
+  );
+
+  return (
+    <>
+      {/* Floating Button */}
+      <button
+        onClick={togglePanel}
+        aria-label="פתח תפריט נגישות"
+        aria-expanded={isOpen}
+        className="fixed bottom-6 left-6 z-50 bg-[#0070f3] dark:bg-primary hover:bg-[#0051a8] dark:hover:bg-primary-hover text-white p-3 sm:p-4 rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-primary/50"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+      </button>
+
+      {/* Panel overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-24 left-6 z-50 w-[90vw] max-w-[360px] bg-background border border-border shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[80vh]"
+            role="dialog"
+            aria-label="תפריט נגישות"
+          >
+            {/* Header */}
+            <div className="bg-primary text-primary-foreground p-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+                תפריט נגישות
+              </h2>
+              <button 
+                onClick={togglePanel}
+                className="text-primary-foreground/80 hover:text-white transition-colors p-1"
+                aria-label="סגור תפריט נגישות"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-4 overflow-y-auto w-full flex-1">
+              <div className="grid grid-cols-2 gap-3">
+                <A11yButton onClick={increaseFontSize} icon={ZoomIn} label="הגדל טקסט" />
+                <A11yButton onClick={decreaseFontSize} icon={ZoomOut} label="הקטן טקסט" />
+                <A11yButton active={state.highContrast} onClick={toggleHighContrast} icon={Eye} label="ניגודיות גבוהה" />
+                <A11yButton active={state.negativeContrast} onClick={toggleNegativeContrast} icon={EyeOff} label="ניגודיות הפוכה" />
+                <A11yButton active={state.grayscale} onClick={toggleGrayscale} icon={CircleDot} label="גווני אפור" />
+                <A11yButton active={state.highlightLinks} onClick={toggleHighlightLinks} icon={LinkIcon} label="הדגשת קישורים" />
+                <A11yButton active={state.readableFont} onClick={toggleReadableFont} icon={Type} label="גופן קריא" />
+                <A11yButton active={state.underlineLinks} onClick={toggleUnderlineLinks} icon={Underline} label="קו תחתון לקישורים" />
+                <A11yButton active={state.disableAnimations} onClick={toggleDisableAnimations} icon={Play} label="עצירת אנימציות" />
+                
+                <button 
+                  onClick={resetAll}
+                  className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/30 dark:border-red-900 dark:text-red-400 transition-colors col-span-1 text-center gap-2"
+                  aria-label="איפוס הגדרות נגישות"
+                >
+                  <RotateCcw size={24} />
+                  <span className="font-medium text-xs sm:text-sm">איפוס הגדרות</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 bg-muted/50 border-t border-border flex justify-between items-center text-sm">
+              <Link href="/accessibility" onClick={() => setIsOpen(false)} className="text-primary hover:underline font-medium flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary rounded px-1">
+                הצהרת נגישות
+              </Link>
+              <div className="text-muted-foreground text-xs font-medium">
+                MortgagePro
+              </div>
+            </div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}

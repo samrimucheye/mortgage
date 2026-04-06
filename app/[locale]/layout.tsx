@@ -10,6 +10,8 @@ import Footer from '@/components/layout/Footer';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { ColorInitializer } from '@/components/providers/ColorInitializer';
 import { AuthProvider } from '@/components/providers/AuthProvider';
+import { AccessibilityProvider } from '@/components/providers/AccessibilityProvider';
+import AccessibilityPanel from '@/components/ui/AccessibilityPanel';
 import FloatWhatsApp from '@/components/ui/FloatWhatsApp';
 import StickyCtaBar from '@/components/ui/StickyCtaBar';
 
@@ -56,20 +58,23 @@ export default async function RootLayout({
       <head>
       </head>
       <body suppressHydrationWarning className={`${fontVar} antialiased bg-background text-foreground flex flex-col min-h-screen transition-colors`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <AuthProvider>
-            <NextIntlClientProvider messages={messages} locale={locale}>
-              <ColorInitializer />
-              <Header />
-              <StickyCtaBar />
-              <main className="flex-grow">
-                {children}
-              </main>
-              <Footer />
-              <FloatWhatsApp />
-            </NextIntlClientProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <AccessibilityProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <AuthProvider>
+              <NextIntlClientProvider messages={messages} locale={locale}>
+                <ColorInitializer />
+                <Header />
+                <StickyCtaBar />
+                <main className="flex-grow">
+                  {children}
+                </main>
+                <Footer />
+                <FloatWhatsApp />
+                <AccessibilityPanel />
+              </NextIntlClientProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </AccessibilityProvider>
       </body>
     </html>
   );
