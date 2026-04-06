@@ -33,6 +33,13 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Check if trying to access calculator (requires login)
+  const isCalculatorPath = pathname.match(/^\/(he|en|am)\/calculator/);
+  if (isCalculatorPath && !token) {
+    const loginUrl = new URL(`/${pathname.split('/')[1]}/login`, request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
   // If trying to access login/signup while ALREADY authenticated
   const isAuthPage = pathname.match(/^\/(he|en|am)\/(login|signup)/);
   if (isAuthPage && token) {

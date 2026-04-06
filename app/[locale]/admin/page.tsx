@@ -3,11 +3,13 @@
 import { useAdminStore } from '@/store/useAdminStore';
 import { useEffect, useState } from 'react';
 import { Users, FileText, CheckCircle, TrendingUp, Calculator } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 export default function AdminDashboardPage() {
   const { clients, leads, fetchData, loading } = useAdminStore();
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations('Admin.Dashboard');
 
   useEffect(() => {
     setMounted(true);
@@ -19,12 +21,20 @@ export default function AdminDashboardPage() {
   const closedDeals = clients.filter(c => c.status === 'נסגר').length;
   const newLeads = leads.filter(l => l.status === 'new').length;
 
+  const getStatusTranslation = (status: string) => {
+    if (status === 'חדש') return t('status_new');
+    if (status === 'בתהליך') return t('status_in_progress');
+    if (status === 'אושר') return t('status_approved');
+    if (status === 'נסגר') return t('status_completed');
+    return status;
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-slate-900">לוח בקרה ראשי</h1>
+        <h1 className="text-3xl font-bold text-slate-900">{t('title')}</h1>
         <div className="text-sm text-slate-500 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200">
-          מחובר כ: <span className="font-bold text-slate-900">יועץ מנהל</span>
+          {t('connected_as')} <span className="font-bold text-slate-900">{t('role_admin')}</span>
         </div>
       </div>
 
@@ -35,7 +45,7 @@ export default function AdminDashboardPage() {
             <Users size={24} />
           </div>
           <div>
-            <p className="text-slate-500 text-sm font-medium">סה״כ לקוחות פעילים</p>
+            <p className="text-slate-500 text-sm font-medium">{t('active_clients')}</p>
             <p className="text-2xl font-bold text-slate-900">{clients.length}</p>
           </div>
         </div>
@@ -45,7 +55,7 @@ export default function AdminDashboardPage() {
             <CheckCircle size={24} />
           </div>
           <div>
-            <p className="text-slate-500 text-sm font-medium">עסקאות שנסגרו</p>
+            <p className="text-slate-500 text-sm font-medium">{t('closed_deals')}</p>
             <p className="text-2xl font-bold text-slate-900">{closedDeals}</p>
           </div>
         </div>
@@ -55,7 +65,7 @@ export default function AdminDashboardPage() {
             <FileText size={24} />
           </div>
           <div>
-            <p className="text-slate-500 text-sm font-medium">לידים חדשים להיום</p>
+            <p className="text-slate-500 text-sm font-medium">{t('new_leads')}</p>
             <p className="text-2xl font-bold text-slate-900">{newLeads}</p>
           </div>
         </div>
@@ -65,7 +75,7 @@ export default function AdminDashboardPage() {
             <TrendingUp size={24} />
           </div>
           <div>
-            <p className="text-slate-500 text-sm font-medium">צפי הכנסות מוערך</p>
+            <p className="text-slate-500 text-sm font-medium">{t('revenue')}</p>
             <p className="text-2xl font-bold text-slate-900">₪{(closedDeals * 7500).toLocaleString()}</p>
           </div>
         </div>
@@ -74,15 +84,15 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Quick Links / Actions */}
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-          <h2 className="text-xl font-bold mb-6 text-slate-900">פעולות מהירות</h2>
+          <h2 className="text-xl font-bold mb-6 text-slate-900">{t('fast_actions')}</h2>
           <div className="grid grid-cols-2 gap-4">
-            <Link href="/he/admin/mix-builder" className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors text-blue-700 border border-blue-100">
+            <Link href="/admin/mix-builder" className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors text-blue-700 border border-blue-100">
               <Calculator size={32} />
-              <span className="font-bold text-lg">בניית תמהיל חדש</span>
+              <span className="font-bold text-lg">{t('new_builder')}</span>
             </Link>
-            <Link href="/he/admin/clients" className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors text-slate-700 border border-slate-200">
+            <Link href="/admin/clients" className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors text-slate-700 border border-slate-200">
               <Users size={32} />
-              <span className="font-bold text-lg">ניהול לקוחות</span>
+              <span className="font-bold text-lg">{t('manage_clients')}</span>
             </Link>
           </div>
         </div>
@@ -90,8 +100,8 @@ export default function AdminDashboardPage() {
         {/* Recent Clients */}
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-slate-900">לקוחות אחרונים</h2>
-            <Link href="/he/admin/clients" className="text-blue-600 text-sm hover:underline">לכל הלקוחות</Link>
+            <h2 className="text-xl font-bold text-slate-900">{t('recent_clients')}</h2>
+            <Link href="/admin/clients" className="text-blue-600 text-sm hover:underline">{t('all_clients')}</Link>
           </div>
           <div className="space-y-4">
             {clients.slice(0, 3).map(client => (
@@ -106,11 +116,11 @@ export default function AdminDashboardPage() {
                   client.status === 'אושר' ? 'bg-purple-100 text-purple-700' :
                   'bg-emerald-100 text-emerald-700'
                 }`}>
-                  {client.status}
+                  {getStatusTranslation(client.status)}
                 </span>
               </div>
             ))}
-            {clients.length === 0 && <p className="text-slate-500 text-center py-4">אין לקוחות כרגע.</p>}
+            {clients.length === 0 && <p className="text-slate-500 text-center py-4">{t('no_clients')}</p>}
           </div>
         </div>
       </div>

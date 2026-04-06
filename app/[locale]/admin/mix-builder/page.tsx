@@ -5,26 +5,31 @@ import { Plus, Trash2, Save, Download, PieChart as PieChartIcon, User, Building2
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { useTranslations, useLocale } from 'next-intl';
 
-type TrackType = 'פריים' | 'קבועה לא צמודה (קל״צ)' | 'קבועה צמודה' | 'משתנה כל 5';
+type TrackType = 'Prime' | 'Fixed Not Indexed' | 'Fixed Indexed' | 'Variable Every 5';
 
 interface LoanTrack {
   id: string;
-  type: TrackType;
+  type: string;
   amount: number;
   interest: number;
   years: number;
 }
 
 const COLORS = ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ef4444'];
-const TRACK_TYPES: TrackType[] = ['פריים', 'קבועה לא צמודה (קל״צ)', 'קבועה צמודה', 'משתנה כל 5'];
+const TRACK_TYPES = ['פריים', 'קבועה לא צמודה (קל״צ)', 'קבועה צמודה', 'משתנה כל 5'];
 
 export default function MixBuilderPage() {
+  const t = useTranslations('Admin.MixBuilder');
+  const locale = useLocale();
+  const isRtl = locale === 'he';
+
   const [tracks, setTracks] = useState<LoanTrack[]>([
     { id: 't1', type: 'פריים', amount: 300000, interest: 5.5, years: 30 }
   ]);
   const [clientName, setClientName] = useState('');
-  const [advisorName, setAdvisorName] = useState('יועץ מומחה');
+  const [advisorName, setAdvisorName] = useState('');
   const [isExporting, setIsExporting] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -39,11 +44,11 @@ export default function MixBuilderPage() {
   };
 
   const updateTrack = (id: string, field: keyof LoanTrack, value: any) => {
-    setTracks(tracks.map(t => t.id === id ? { ...t, [field]: value } : t));
+    setTracks(tracks.map(trk => trk.id === id ? { ...trk, [field]: value } : trk));
   };
 
   const removeTrack = (id: string) => {
-    setTracks(tracks.filter(t => t.id !== id));
+    setTracks(tracks.filter(trk => trk.id !== id));
   };
 
   const calculateMonthly = (amount: number, interest: number, years: number) => {
@@ -54,14 +59,14 @@ export default function MixBuilderPage() {
     return P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
   };
 
-  const trackData = tracks.map(t => ({
-    ...t,
-    monthlyPayment: calculateMonthly(t.amount, t.interest, t.years)
+  const trackData = tracks.map(trk => ({
+    ...trk,
+    monthlyPayment: calculateMonthly(trk.amount, trk.interest, trk.years)
   }));
 
-  const totalAmount = trackData.reduce((sum, t) => sum + t.amount, 0);
-  const totalMonthly = trackData.reduce((sum, t) => sum + t.monthlyPayment, 0);
-  const chartData = trackData.map(t => ({ name: t.type, value: t.amount }));
+  const totalAmount = trackData.reduce((sum, trk) => sum + trk.amount, 0);
+  const totalMonthly = trackData.reduce((sum, trk) => sum + trk.monthlyPayment, 0);
+  const chartData = trackData.map(trk => ({ name: trk.type, value: trk.amount }));
 
   const exportToPDF = async () => {
     if (!printRef.current) return;
@@ -94,8 +99,8 @@ export default function MixBuilderPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">בונה תמהיל</h1>
-          <p className="text-slate-500">סימולטור משכנתא מלא עבור בניית המסלולים והריביות ללקוח.</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">{t('title')}</h1>
+          <p className="text-slate-500">{t('subtitle')}</p>
         </div>
         <div className="flex gap-3">
           <button 
@@ -104,75 +109,77 @@ export default function MixBuilderPage() {
             className="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition disabled:opacity-50"
           >
             <Download size={18} />
-            {isExporting ? 'מייצא...' : 'יצא ל-PDF'}
+            {isExporting ? t('exporting') : t('export_pdf')}
           </button>
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 shadow-sm transition">
             <Save size={18} />
-            שמור תמהיל
+            {t('save_mix')}
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         {/* Left Side: Tracks Builder & Client Details */}
         <div className="lg:col-span-2 space-y-6">
-          
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <h3 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
               <User className="text-blue-600" size={20} />
-              פרטי הלקוח והיועץ
+              {t('client_advisor_details')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1">שם הלקוח</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">{t('client_name')}</label>
                 <div className="relative">
                   <input 
                     type="text" 
-                    placeholder="הכנס שם מלא..." 
+                    placeholder={t('client_name_placeholder')} 
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 pl-10 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 rtl:pr-10 ltr:pl-10 text-sm outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <User className="absolute left-3 top-2.5 text-slate-400" size={18} />
+                  <div className="absolute top-2.5 rtl:right-3 ltr:left-3 text-slate-400">
+                    <User size={18} />
+                  </div>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1">שם היועץ</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">{t('advisor_name')}</label>
                 <div className="relative">
                   <input 
                     type="text" 
                     value={advisorName}
                     onChange={(e) => setAdvisorName(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 pl-10 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 rtl:pr-10 ltr:pl-10 text-sm outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <Briefcase className="absolute left-3 top-2.5 text-slate-400" size={18} />
+                  <div className="absolute top-2.5 rtl:right-3 ltr:left-3 text-slate-400">
+                    <Briefcase size={18} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="space-y-4">
-            {trackData.map((track, i) => (
-              <div key={track.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            {trackData.map((trk, i) => (
+              <div key={trk.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-sm" style={{ backgroundColor: COLORS[i % COLORS.length] }}>
                       {i + 1}
                     </div>
-                    <h3 className="font-bold text-lg text-slate-900">מסלול {track.type}</h3>
+                    <h3 className="font-bold text-lg text-slate-900">{t('track')} {trk.type}</h3>
                   </div>
-                  <button onClick={() => removeTrack(track.id)} className="text-red-400 hover:text-red-600 transition p-2">
+                  <button onClick={() => removeTrack(trk.id)} className="text-red-400 hover:text-red-600 transition p-2">
                     <Trash2 size={18} />
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-1">סוג מסלול</label>
+                    <label className="block text-xs font-medium text-slate-500 mb-1">{t('track_type')}</label>
                     <select 
-                      value={track.type} 
-                      onChange={(e) => updateTrack(track.id, 'type', e.target.value)}
+                      value={trk.type} 
+                      onChange={(e) => updateTrack(trk.id, 'type', e.target.value)}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       {TRACK_TYPES.map(type => <option key={type} value={type}>{type}</option>)}
@@ -180,44 +187,41 @@ export default function MixBuilderPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-1">סכום (₪)</label>
+                    <label className="block text-xs font-medium text-slate-500 mb-1">{t('amount')}</label>
                     <input 
                       type="number" 
-                      value={track.amount} 
-                      onChange={(e) => updateTrack(track.id, 'amount', Number(e.target.value))}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                      dir="ltr"
+                      value={trk.amount} 
+                      onChange={(e) => updateTrack(trk.id, 'amount', Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 dir-ltr text-left"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-1">ריבית (%)</label>
+                    <label className="block text-xs font-medium text-slate-500 mb-1">{t('interest')}</label>
                     <input 
                       type="number" 
                       step="0.1"
-                      value={track.interest} 
-                      onChange={(e) => updateTrack(track.id, 'interest', Number(e.target.value))}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                      dir="ltr"
+                      value={trk.interest} 
+                      onChange={(e) => updateTrack(trk.id, 'interest', Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 dir-ltr text-left"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-1">שנים</label>
+                    <label className="block text-xs font-medium text-slate-500 mb-1">{t('years')}</label>
                     <input 
                       type="number" 
-                      value={track.years} 
-                      onChange={(e) => updateTrack(track.id, 'years', Number(e.target.value))}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                      dir="ltr"
+                      value={trk.years} 
+                      onChange={(e) => updateTrack(trk.id, 'years', Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 dir-ltr text-left"
                     />
                   </div>
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-slate-100 flex justify-end">
                   <div className="bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 flex items-center gap-3">
-                    <span className="text-sm text-slate-500">החזר משוער למסלול זה:</span>
-                    <span className="font-bold text-slate-900 text-lg">₪{Math.round(track.monthlyPayment).toLocaleString()}</span>
+                    <span className="text-sm text-slate-500">{t('est_monthly')}</span>
+                    <span className="font-bold text-slate-900 text-lg">₪{Math.round(trk.monthlyPayment).toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -228,7 +232,7 @@ export default function MixBuilderPage() {
               className="w-full py-4 border-2 border-dashed border-slate-300 rounded-2xl flex items-center justify-center gap-2 text-slate-500 font-medium hover:bg-slate-50 hover:text-blue-600 hover:border-blue-300 transition-colors"
             >
               <Plus size={20} />
-              הוסף מסלול חדש לתמהיל
+              {t('add_track')}
             </button>
           </div>
         </div>
@@ -238,7 +242,7 @@ export default function MixBuilderPage() {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <h3 className="font-bold text-lg text-slate-900 mb-6 flex items-center gap-2">
               <PieChartIcon className="text-blue-600" />
-              סיכום התמהיל
+              {t('mix_summary')}
             </h3>
 
             <div className="mb-8 h-64 w-full">
@@ -257,19 +261,19 @@ export default function MixBuilderPage() {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                    <Tooltip formatter={(value: any) => `₪${Number(value).toLocaleString()}`} />
-                    <Legend verticalAlign="bottom" height={36} />
-                  </PieChart>
+                  <Tooltip formatter={(value: any) => `₪${Number(value).toLocaleString()}`} />
+                  <Legend verticalAlign="bottom" height={36} />
+                </PieChart>
               </ResponsiveContainer>
             </div>
 
             <div className="space-y-4">
               <div className="flex justify-between items-end border-b border-slate-100 pb-3">
-                <span className="text-slate-500">סך הלוואה מבוקש:</span>
+                <span className="text-slate-500">{t('total_loan')}</span>
                 <span className="font-bold text-2xl text-slate-900">₪{totalAmount.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-end pb-3">
-                <span className="text-slate-500">החזר חודשי התחלתי:</span>
+                <span className="text-slate-500">{t('start_monthly')}</span>
                 <span className="font-bold text-3xl text-blue-600">₪{Math.round(totalMonthly).toLocaleString()}</span>
               </div>
             </div>
@@ -279,46 +283,46 @@ export default function MixBuilderPage() {
       </div>
 
       {/* HIDDEN PRINT TILE TEMPLATE */}
-      <div className="hidden">
-        <div ref={printRef} className="bg-white p-12 text-slate-900 font-sans rtl w-[210mm] min-h-[297mm]">
-          <div className="flex justify-between items-center border-b-4 border-blue-600 pb-8 mb-10">
+      <div className="absolute top-0 left-[9999px] -z-50 opacity-0 pointer-events-none">
+        <div ref={printRef} className="font-sans w-[210mm] min-h-[297mm]" dir={isRtl ? 'rtl' : 'ltr'} style={{ backgroundColor: '#ffffff', color: '#0f172a', padding: '3rem' }}>
+          <div className="flex justify-between items-center pb-8 mb-10" style={{ borderBottom: '4px solid #2563eb' }}>
             <div>
-              <h2 className="text-4xl font-bold text-blue-600 mb-2">MortgagePRO</h2>
-              <p className="text-slate-500 text-lg">תכנון פיננסי ויועץ משכנתאות מומחה</p>
+              <h2 className="text-4xl font-bold mb-2" style={{ color: '#2563eb' }}>MortgagePRO</h2>
+              <p className="text-lg" style={{ color: '#64748b' }}>{t('pdf_advisor_title')}</p>
             </div>
-            <div className="text-left ltr">
-              <div className="text-2xl font-bold text-slate-900">{new Date().toLocaleDateString('he-IL')}</div>
-              <div className="text-slate-500 font-medium">הצעה למשכנתא #1024</div>
+            <div className="text-left ltr" dir="ltr">
+              <div className="text-2xl font-bold" style={{ color: '#0f172a' }}>{new Date().toLocaleDateString(locale === 'he' ? 'he-IL' : 'en-US')}</div>
+              <div className="font-medium" style={{ color: '#64748b' }}>{t('pdf_proposal')}</div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-10 mb-12">
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">פרטי לקוח</h4>
-              <p className="text-2xl font-bold text-slate-900">{clientName || 'טרם מולא שם'}</p>
+            <div className="p-6 rounded-2xl" style={{ backgroundColor: '#f8fafc', border: '1px solid #f1f5f9' }}>
+              <h4 className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#94a3b8' }}>{t('pdf_client_details')}</h4>
+              <p className="text-2xl font-bold" style={{ color: '#0f172a' }}>{clientName || t('pdf_not_filled')}</p>
             </div>
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">יועץ מלווה</h4>
-              <p className="text-2xl font-bold text-slate-900">{advisorName}</p>
+            <div className="p-6 rounded-2xl" style={{ backgroundColor: '#f8fafc', border: '1px solid #f1f5f9' }}>
+              <h4 className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#94a3b8' }}>{t('pdf_advisor_label')}</h4>
+              <p className="text-2xl font-bold" style={{ color: '#0f172a' }}>{advisorName || t('pdf_not_filled')}</p>
             </div>
           </div>
 
           <div className="mb-12">
             <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <span className="w-2 h-8 bg-blue-600 rounded-full" />
-              סיכום התמהיל המוצע
+              <span className="w-2 h-8 rounded-full" style={{ backgroundColor: '#2563eb' }} />
+              {t('pdf_mix_summary_title')}
             </h3>
             <div className="grid grid-cols-3 gap-6">
-              <div className="bg-blue-600 text-white p-6 rounded-2xl">
-                <p className="text-blue-100 mb-1 text-sm">סך ההלוואה</p>
+              <div className="p-6 rounded-2xl" style={{ backgroundColor: '#2563eb', color: '#ffffff' }}>
+                <p className="mb-1 text-sm" style={{ color: '#dbeafe' }}>{t('pdf_total_loan')}</p>
                 <p className="text-3xl font-bold">₪{totalAmount.toLocaleString()}</p>
               </div>
-              <div className="bg-slate-900 text-white p-6 rounded-2xl">
-                <p className="text-slate-400 mb-1 text-sm">החזר חודשי התחלתי</p>
+              <div className="p-6 rounded-2xl" style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
+                <p className="mb-1 text-sm" style={{ color: '#94a3b8' }}>{t('pdf_start_monthly')}</p>
                 <p className="text-3xl font-bold">₪{Math.round(totalMonthly).toLocaleString()}</p>
               </div>
-              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                <p className="text-slate-500 mb-1 text-sm">מספר מסלולים</p>
+              <div className="p-6 rounded-2xl" style={{ backgroundColor: '#f8fafc', border: '1px solid #f1f5f9' }}>
+                <p className="mb-1 text-sm" style={{ color: '#64748b' }}>{t('pdf_tracks_count')}</p>
                 <p className="text-3xl font-bold">{tracks.length}</p>
               </div>
             </div>
@@ -326,36 +330,36 @@ export default function MixBuilderPage() {
 
           <div className="mb-12">
             <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <span className="w-2 h-8 bg-blue-600 rounded-full" />
-              פירוט מסלולים
+              <span className="w-2 h-8 rounded-full" style={{ backgroundColor: '#2563eb' }} />
+              {t('pdf_track_details_title')}
             </h3>
-            <table className="w-full text-right border-collapse">
+            <table className="w-full text-right border-collapse" dir={isRtl ? 'rtl' : 'ltr'} style={{ textAlign: isRtl ? 'right' : 'left' }}>
               <thead>
-                <tr className="bg-slate-100 text-slate-600 uppercase text-sm">
-                  <th className="p-4 rounded-r-xl">מסלול</th>
-                  <th className="p-4">סכום</th>
-                  <th className="p-4 text-center">ריבית</th>
-                  <th className="p-4 text-center">שנים</th>
-                  <th className="p-4 rounded-l-xl text-left">החזר חודשי</th>
+                <tr className="uppercase text-sm" style={{ backgroundColor: '#f1f5f9', color: '#475569' }}>
+                  <th className="p-4">{t('pdf_th_track')}</th>
+                  <th className="p-4">{t('pdf_th_amount')}</th>
+                  <th className="p-4 text-center">{t('pdf_th_interest')}</th>
+                  <th className="p-4 text-center">{t('pdf_th_years')}</th>
+                  <th className="p-4">{t('pdf_th_monthly')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
-                {trackData.map((t) => (
-                  <tr key={t.id} className="text-lg font-medium text-slate-900">
-                    <td className="p-4 font-bold">{t.type}</td>
-                    <td className="p-4">₪{t.amount.toLocaleString()}</td>
-                    <td className="p-4 text-center">{t.interest}%</td>
-                    <td className="p-4 text-center">{t.years}</td>
-                    <td className="p-4 text-left font-bold text-blue-600">₪{Math.round(t.monthlyPayment).toLocaleString()}</td>
+              <tbody>
+                {trackData.map((trk) => (
+                  <tr key={trk.id} className="text-lg font-medium" style={{ borderBottom: '1px solid #f1f5f9', color: '#0f172a' }}>
+                    <td className="p-4 font-bold">{trk.type}</td>
+                    <td className="p-4">₪{trk.amount.toLocaleString()}</td>
+                    <td className="p-4 text-center">{trk.interest}%</td>
+                    <td className="p-4 text-center">{trk.years}</td>
+                    <td className="p-4 font-bold" style={{ color: '#2563eb' }}>₪{Math.round(trk.monthlyPayment).toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <div className="mt-auto pt-16 border-t border-slate-100 text-center text-slate-500 text-sm">
-            <p className="mb-2 font-bold text-slate-900">יש לשים לב: הצעה זו הינה סימולציה בלבד ובכפוף לאישור סופי של הבנק המלווה.</p>
-            <p>© {new Date().getFullYear()} MortgagePro - ייעוץ משכנתאות מקצועי</p>
+          <div className="mt-auto pt-16 text-center text-sm" style={{ borderTop: '1px solid #f1f5f9', color: '#64748b' }}>
+            <p className="mb-2 font-bold" style={{ color: '#0f172a' }}>{t('pdf_notice')}</p>
+            <p>© {new Date().getFullYear()} MortgagePro - {t('pdf_copyright')}</p>
           </div>
         </div>
       </div>
