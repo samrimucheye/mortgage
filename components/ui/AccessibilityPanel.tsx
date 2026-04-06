@@ -14,7 +14,8 @@ import {
   Play, 
   Underline,
   RotateCcw,
-  X
+  X,
+  Accessibility
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -62,9 +63,9 @@ export default function AccessibilityPanel() {
         onClick={togglePanel}
         aria-label={t('open_panel')}
         aria-expanded={isOpen}
-        className="fixed bottom-6 left-6 z-50 bg-[#0070f3] dark:bg-primary hover:bg-[#0051a8] dark:hover:bg-primary-hover text-white p-3 sm:p-4 rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-primary/50"
+        className="fixed bottom-4 start-4 sm:bottom-6 sm:start-6 z-50 bg-[#0070f3] dark:bg-primary hover:bg-[#0051a8] dark:hover:bg-primary-hover text-white p-3 sm:p-4 rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-primary/50"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+        <Accessibility className="w-6 h-6 sm:w-8 sm:h-8" />
       </button>
 
       {/* Panel overlay */}
@@ -75,14 +76,14 @@ export default function AccessibilityPanel() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 left-6 z-50 w-[90vw] max-w-[360px] bg-background border border-border shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[80vh]"
+            className="fixed bottom-20 start-4 sm:bottom-24 sm:start-6 z-50 w-[90vw] max-w-[360px] bg-background border border-border shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[80vh]"
             role="dialog"
             aria-label={t('panel_title')}
           >
             {/* Header */}
             <div className="bg-primary text-primary-foreground p-4 flex justify-between items-center">
-              <h2 className="text-xl font-bold flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+              <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2">
+                <Accessibility className="w-5 h-5 sm:w-6 sm:h-6" />
                 {t('panel_title')}
               </h2>
               <button 

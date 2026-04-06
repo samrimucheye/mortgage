@@ -48,7 +48,7 @@ export default function Header() {
             </Link>
           </div>
 
-          <nav className="hidden md:flex space-x-8 lg:space-x-12 mx-8 rtl:space-x-reverse">
+          <nav className="hidden md:flex gap-6 lg:gap-12 mx-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

@@ -29,8 +29,8 @@ export default function LeadsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {leads.filter(l => l.status !== 'converted').map(lead => (
-          <div key={lead.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col hover:shadow-md transition">
+        {leads.filter(l => l.status !== 'converted').map((lead, index) => (
+          <div key={lead._id || lead.id || index} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col hover:shadow-md transition">
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h3 className="font-bold text-lg text-slate-900">{lead.name}</h3>

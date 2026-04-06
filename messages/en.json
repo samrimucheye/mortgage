@@ -248,5 +248,32 @@
     "privacy_policy": "Privacy Policy",
     "privacy_secure": "Your details are kept securely and will not be shared with a third party",
     "consent_required": "You must accept the privacy policy"
+  },
+  "Login": {
+    "invalid_credentials": "Invalid email or password",
+    "welcome_back": "Welcome Back",
+    "welcome_desc": "Log in to the MortgagePro CRM",
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "logging_in": "Logging in...",
+    "login_btn": "Sign In",
+    "no_account_q": "Don't have an account? ",
+    "signup_link": "Sign up here"
+  },
+  "Signup": {
+    "password_mismatch": "Passwords do not match",
+    "password_length": "Password must be at least 6 characters",
+    "creation_error": "Error creating user",
+    "login_failed": "Signup successful but login failed. Please try again.",
+    "network_error": "Network error. Please try again.",
+    "create_account": "Create Account",
+    "signup_desc": "Register as an admin in MortgagePro",
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "confirm_password_label": "Confirm Password",
+    "creating_account": "Creating account...",
+    "signup_btn": "Sign Up",
+    "have_account_q": "Already have an account? ",
+    "login_link": "Log in here"
   }
 }

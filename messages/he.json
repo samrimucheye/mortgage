@@ -248,5 +248,32 @@
     "privacy_policy": "מדיניות הפרטיות",
     "privacy_secure": "פרטיך נשמרים בצורה מאובטחת ולא יועברו לצד שלישי",
     "consent_required": "חובה לאשר את מדיניות הפרטיות"
+  },
+  "Login": {
+    "invalid_credentials": "אימייל או סיסמה שגויים",
+    "welcome_back": "ברוך שובך",
+    "welcome_desc": "התחבר למערכת ניהול הלקוחות של MortgagePro",
+    "email_label": "כתובת אימייל",
+    "password_label": "סיסמה",
+    "logging_in": "מתחבר...",
+    "login_btn": "כניסה למערכת",
+    "no_account_q": "אין לך חשבון? ",
+    "signup_link": "הירשם כאן"
+  },
+  "Signup": {
+    "password_mismatch": "הסיסמאות אינן תואמות",
+    "password_length": "הסיסמה חייבת להכיל לפחות 6 תווים",
+    "creation_error": "שגיאה ביצירת המשתמש",
+    "login_failed": "ההרשמה הצליחה אך ההתחברות נכשלה. אנא נסה שוב.",
+    "network_error": "שגיאת רשת. אנא נסה שנית.",
+    "create_account": "יצירת חשבון",
+    "signup_desc": "הירשם כמנהל במערכת MortgagePro",
+    "email_label": "כתובת אימייל",
+    "password_label": "סיסמה",
+    "confirm_password_label": "אימות סיסמה",
+    "creating_account": "יוצר חשבון...",
+    "signup_btn": "הירשם למערכת",
+    "have_account_q": "כבר יש לך חשבון? ",
+    "login_link": "התחבר כאן"
   }
 }

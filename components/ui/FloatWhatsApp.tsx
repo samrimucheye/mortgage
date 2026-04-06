@@ -6,12 +6,12 @@ export default function FloatWhatsApp() {
       href="https://wa.me/972500000000"
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-6 end-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110 flex items-center justify-center"
+      className="fixed bottom-4 end-4 sm:bottom-6 sm:end-6 z-50 bg-[#25d366] text-white p-3 sm:p-4 rounded-full shadow-2xl transition-transform transform hover:scale-105 flex items-center justify-center"
       aria-label="Contact us on WhatsApp"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-8 w-8"
+        className="w-6 h-6 sm:w-8 sm:h-8"
         fill="currentColor"
         viewBox="0 0 24 24"
       >

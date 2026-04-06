@@ -248,5 +248,32 @@
     "privacy_policy": "የግላዊነት ፖሊሲ",
     "privacy_secure": "መረጃዎ ደህንነቱ በተጠበቀ ሁኔታ ይቀመጣል እና ለሶስተኛ ወገን አይተላለፍም",
     "consent_required": "የግላዊነት ፖሊሲውን መቀበል አለብዎት"
+  },
+  "Login": {
+    "invalid_credentials": "የተሳሳተ ኢሜይል ወይም የይለፍ ቃል",
+    "welcome_back": "እንኳን ደህና መጡ",
+    "welcome_desc": "ወደ MortgagePro አስተዳደር ስርዓት ይግቡ",
+    "email_label": "የኢሜይል አድራሻ",
+    "password_label": "የይለፍ ቃል",
+    "logging_in": "በመግባት ላይ...",
+    "login_btn": "ግባ",
+    "no_account_q": "መለያ የለዎትም? ",
+    "signup_link": "እዚህ ይመዝገቡ"
+  },
+  "Signup": {
+    "password_mismatch": "የይለፍ ቃሎቹ አይዛመዱም",
+    "password_length": "የይለፍ ቃል ቢያንስ 6 ሆሄያት መሆን አለበት",
+    "creation_error": "ተጠቃሚ ሲፈጠር ስህተት አጋጥሟል",
+    "login_failed": "ምዝገባው ተሳክቷል ነገር ግን መግባት አልተሳካም። እባክዎ እንደገና ይሞክሩ።",
+    "network_error": "የአውታረ መረብ ስህተት። እባክዎ እንደገና ይሞክሩ።",
+    "create_account": "መለያ ፍጠር",
+    "signup_desc": "እንደ አስተዳዳሪ ב MortgagePro ይመዝገቡ",
+    "email_label": "የኢሜይል አድራሻ",
+    "password_label": "የይለፍ ቃል",
+    "confirm_password_label": "የይለፍ ቃል አረጋግጥ",
+    "creating_account": "መለያ በመፍጠር ላይ...",
+    "signup_btn": "ይመዝገቡ",
+    "have_account_q": "ቀድሞውኑ መለያ አሎት? ",
+    "login_link": "እዚህ ይግቡ"
   }
 }
