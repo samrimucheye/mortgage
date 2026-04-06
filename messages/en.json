@@ -99,7 +99,9 @@
     "tracks": "Mortgage Mix",
     "distribution": "Mix Distribution",
     "require_login": "The advanced mix builder and analysis calculator is available for registered users only.",
-    "login_to_use": "Log in to use the calculator"
+    "login_to_use": "Log in to use the calculator",
+    "balance_over_time": "Principal Balance Over Time",
+    "mismatch_warning": "Note: Total tracks amount does not match the requested loan amount."
   },
   "Contact": {
     "title": "Leave your details and we will get back to you shortly",
@@ -223,5 +225,28 @@
     "leads": "Leads Management",
     "clients": "Clients Management",
     "builder": "Mix Builder"
+  },
+  "A11y": {
+    "open_panel": "Open Accessibility Panel",
+    "panel_title": "Accessibility Menu",
+    "close_panel": "Close Accessibility Menu",
+    "increase_font": "Increase Text",
+    "decrease_font": "Decrease Text",
+    "high_contrast": "High Contrast",
+    "negative_contrast": "Negative Contrast",
+    "grayscale": "Grayscale",
+    "highlight_links": "Highlight Links",
+    "readable_font": "Readable Font",
+    "underline_links": "Underline Links",
+    "disable_animations": "Disable Animations",
+    "reset_all": "Reset Accessibility Settings",
+    "reset": "Reset Settings",
+    "statement": "Accessibility Statement"
+  },
+  "Privacy": {
+    "consent_prefix": "I agree to send my details for contact purposes and accept the ",
+    "privacy_policy": "Privacy Policy",
+    "privacy_secure": "Your details are kept securely and will not be shared with a third party",
+    "consent_required": "You must accept the privacy policy"
   }
 }

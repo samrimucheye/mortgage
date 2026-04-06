@@ -99,7 +99,9 @@
     "tracks": "የሞርጌጅ ድብልቅ",
     "distribution": "የድብልቅ ስርጭት",
     "require_login": "የላቀው የድብልቅ ግንባታ እና ትንተና ማስያ ለተመዘገቡ ተጠቃሚዎች ብቻ ይገኛል።",
-    "login_to_use": "ማስያውን ለመጠቀም ግባ"
+    "login_to_use": "ማስያውን ለመጠቀም ግባ",
+    "balance_over_time": "የዋና ሚዛን በጊዜ ሂደት",
+    "mismatch_warning": "ማሳሰቢያ፡ የኮርሶች አጠቃላይ መጠን ከተጠየቀው የብድር መጠን ጋር አይዛመድም።"
   },
   "Contact": {
     "title": "ዝርዝሮችዎን ይተዉ እና በፍጥነት እንመለስልዎታለን",
@@ -223,5 +225,28 @@
     "leads": "መሪዎች",
     "clients": "ደንበኞች",
     "builder": "ገንቢ"
+  },
+  "A11y": {
+    "open_panel": "ተደራሽነት ማውጫን ክፈት",
+    "panel_title": "ተደራሽነት ማውጫ",
+    "close_panel": "ተደራሽነት ማውጫን ዝጋ",
+    "increase_font": "ጽሑፍ አሳድግ",
+    "decrease_font": "ጽሑፍ አሳንስ",
+    "high_contrast": "ከፍተኛ ንፅፅር",
+    "negative_contrast": "አሉታዊ ንፅፅር",
+    "grayscale": "ጥቁር እና ነጭ",
+    "highlight_links": "አገናኞችን አድምቅ",
+    "readable_font": "የሚነበብ ቅርጸ-ቁምፊ",
+    "underline_links": "አገናኞች ላይ የተሰመረ",
+    "disable_animations": "እነማዎችን አጥፋ",
+    "reset_all": "የተደራሽነት ቅንብሮችን ዳግም አስጀምር",
+    "reset": "ቅንብሮችን ዳግም አስጀምር",
+    "statement": "የተደራሽነት መግለጫ"
+  },
+  "Privacy": {
+    "consent_prefix": "ግንኙነት ለመፍጠር መረጃዬን ለመላክ ተስማምቻለሁ እና እቀበላለሁ ፡ ",
+    "privacy_policy": "የግላዊነት ፖሊሲ",
+    "privacy_secure": "መረጃዎ ደህንነቱ በተጠበቀ ሁኔታ ይቀመጣል እና ለሶስተኛ ወገን አይተላለፍም",
+    "consent_required": "የግላዊነት ፖሊሲውን መቀበል አለብዎት"
   }
 }

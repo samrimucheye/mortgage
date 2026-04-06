@@ -9,6 +9,7 @@ import ConsentCheckbox from './ConsentCheckbox';
 
 export default function LeadForm() {
   const t = useTranslations('Contact');
+  const tPrivacy = useTranslations('Privacy');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const formSchema = z.object({
@@ -17,7 +18,7 @@ export default function LeadForm() {
     email: z.string().email().optional().or(z.literal('')),
     message: z.string().optional(),
     consent: z.boolean().refine(val => val === true, {
-      message: "חובה לאשר את מדיניות הפרטיות"
+      message: tPrivacy('consent_required')
     })
   });
 

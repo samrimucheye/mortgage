@@ -181,7 +181,7 @@ export default function MortgageCalculator() {
           {isAmountMismatch && (
             <div className="mt-4 flex items-center gap-2 text-amber-600 dark:text-amber-500 text-sm font-medium bg-amber-50 dark:bg-amber-950/30 p-3 rounded-lg border border-amber-200 dark:border-amber-900/50">
               <AlertCircle size={18} />
-              <span>שים לב: סך המסלולים (₪{calculations.tracksTotalAmount.toLocaleString()}) אינו תואם לסכום ההלוואה המבוקש.</span>
+              <span>{t('mismatch_warning')} (₪{calculations.tracksTotalAmount.toLocaleString()})</span>
             </div>
           )}
         </div>
@@ -326,7 +326,7 @@ export default function MortgageCalculator() {
 
         {/* AREA CHART */}
         <div className="bg-card p-6 border border-border rounded-2xl shadow-sm h-[300px] flex flex-col">
-          <h3 className="text-sm font-bold text-muted-foreground w-full mb-2 border-b pb-2">יתרת קרן לאורך זמן</h3>
+          <h3 className="text-sm font-bold text-muted-foreground w-full mb-2 border-b pb-2">{t('balance_over_time')}</h3>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={areaData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>

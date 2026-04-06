@@ -16,9 +16,11 @@ import {
   RotateCcw,
   X
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 export default function AccessibilityPanel() {
+  const t = useTranslations('A11y');
   const [isOpen, setIsOpen] = useState(false);
   const { 
     state, 
@@ -58,7 +60,7 @@ export default function AccessibilityPanel() {
       {/* Floating Button */}
       <button
         onClick={togglePanel}
-        aria-label="פתח תפריט נגישות"
+        aria-label={t('open_panel')}
         aria-expanded={isOpen}
         className="fixed bottom-6 left-6 z-50 bg-[#0070f3] dark:bg-primary hover:bg-[#0051a8] dark:hover:bg-primary-hover text-white p-3 sm:p-4 rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-primary/50"
       >
@@ -75,18 +77,18 @@ export default function AccessibilityPanel() {
             transition={{ duration: 0.2 }}
             className="fixed bottom-24 left-6 z-50 w-[90vw] max-w-[360px] bg-background border border-border shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[80vh]"
             role="dialog"
-            aria-label="תפריט נגישות"
+            aria-label={t('panel_title')}
           >
             {/* Header */}
             <div className="bg-primary text-primary-foreground p-4 flex justify-between items-center">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
-                תפריט נגישות
+                {t('panel_title')}
               </h2>
               <button 
                 onClick={togglePanel}
                 className="text-primary-foreground/80 hover:text-white transition-colors p-1"
-                aria-label="סגור תפריט נגישות"
+                aria-label={t('close_panel')}
               >
                 <X size={24} />
               </button>
@@ -95,23 +97,23 @@ export default function AccessibilityPanel() {
             {/* Content */}
             <div className="p-4 overflow-y-auto w-full flex-1">
               <div className="grid grid-cols-2 gap-3">
-                <A11yButton onClick={increaseFontSize} icon={ZoomIn} label="הגדל טקסט" />
-                <A11yButton onClick={decreaseFontSize} icon={ZoomOut} label="הקטן טקסט" />
-                <A11yButton active={state.highContrast} onClick={toggleHighContrast} icon={Eye} label="ניגודיות גבוהה" />
-                <A11yButton active={state.negativeContrast} onClick={toggleNegativeContrast} icon={EyeOff} label="ניגודיות הפוכה" />
-                <A11yButton active={state.grayscale} onClick={toggleGrayscale} icon={CircleDot} label="גווני אפור" />
-                <A11yButton active={state.highlightLinks} onClick={toggleHighlightLinks} icon={LinkIcon} label="הדגשת קישורים" />
-                <A11yButton active={state.readableFont} onClick={toggleReadableFont} icon={Type} label="גופן קריא" />
-                <A11yButton active={state.underlineLinks} onClick={toggleUnderlineLinks} icon={Underline} label="קו תחתון לקישורים" />
-                <A11yButton active={state.disableAnimations} onClick={toggleDisableAnimations} icon={Play} label="עצירת אנימציות" />
+                <A11yButton onClick={increaseFontSize} icon={ZoomIn} label={t('increase_font')} />
+                <A11yButton onClick={decreaseFontSize} icon={ZoomOut} label={t('decrease_font')} />
+                <A11yButton active={state.highContrast} onClick={toggleHighContrast} icon={Eye} label={t('high_contrast')} />
+                <A11yButton active={state.negativeContrast} onClick={toggleNegativeContrast} icon={EyeOff} label={t('negative_contrast')} />
+                <A11yButton active={state.grayscale} onClick={toggleGrayscale} icon={CircleDot} label={t('grayscale')} />
+                <A11yButton active={state.highlightLinks} onClick={toggleHighlightLinks} icon={LinkIcon} label={t('highlight_links')} />
+                <A11yButton active={state.readableFont} onClick={toggleReadableFont} icon={Type} label={t('readable_font')} />
+                <A11yButton active={state.underlineLinks} onClick={toggleUnderlineLinks} icon={Underline} label={t('underline_links')} />
+                <A11yButton active={state.disableAnimations} onClick={toggleDisableAnimations} icon={Play} label={t('disable_animations')} />
                 
                 <button 
                   onClick={resetAll}
                   className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/30 dark:border-red-900 dark:text-red-400 transition-colors col-span-1 text-center gap-2"
-                  aria-label="איפוס הגדרות נגישות"
+                  aria-label={t('reset_all')}
                 >
                   <RotateCcw size={24} />
-                  <span className="font-medium text-xs sm:text-sm">איפוס הגדרות</span>
+                  <span className="font-medium text-xs sm:text-sm">{t('reset')}</span>
                 </button>
               </div>
             </div>
@@ -119,7 +121,7 @@ export default function AccessibilityPanel() {
             {/* Footer */}
             <div className="p-4 bg-muted/50 border-t border-border flex justify-between items-center text-sm">
               <Link href="/accessibility" onClick={() => setIsOpen(false)} className="text-primary hover:underline font-medium flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary rounded px-1">
-                הצהרת נגישות
+                {t('statement')}
               </Link>
               <div className="text-muted-foreground text-xs font-medium">
                 MortgagePro
