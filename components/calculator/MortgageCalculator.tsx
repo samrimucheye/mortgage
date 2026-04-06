@@ -311,7 +311,7 @@ export default function MortgageCalculator() {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => `₪${value.toLocaleString()}`} />
+              <Tooltip formatter={(value: any) => `₪${value.toLocaleString()}`} />
             </PieChart>
           </ResponsiveContainer>
           <div className="flex flex-wrap justify-center gap-2 mt-2">
@@ -339,7 +339,7 @@ export default function MortgageCalculator() {
               </defs>
               <XAxis dataKey="year" tick={{fontSize: 10}} tickLine={false} axisLine={false} />
               <YAxis tickFormatter={(val) => `${(val / 1000).toFixed(0)}k`} tick={{fontSize: 10}} tickLine={false} axisLine={false} />
-              <Tooltip formatter={(value: number) => `₪${Math.round(value).toLocaleString()}`} labelFormatter={(label) => `שנה ${label}`} />
+              <Tooltip formatter={(value: any) => `₪${Math.round(value).toLocaleString()}`} labelFormatter={(label) => `שנה ${label}`} />
               
               {tracks.map((_, i) => (
                  <Area 
