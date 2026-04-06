@@ -1,0 +1,127 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "calculator": "Calculator",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "title": "Save Tens of Thousands on Your Mortgage – Stress Free",
+    "subtitle": "Personalized mortgage consulting tailored exactly to you – full support until bank approval",
+    "trust": "Hundreds of satisfied clients | Proven experience | Personal support",
+    "cta_consult": "Free Eligibility Check",
+    "cta_whatsapp": "Message us on WhatsApp"
+  },
+  "Benefits": {
+    "save_money": "Significant Financial Savings",
+    "save_money_desc": "Maximizing financial savings through precise planning and negotiation with banks.",
+    "simple_process": "Clear & Simple Process",
+    "simple_process_desc": "Transparent explanations at eye level, without complicated financial jargon.",
+    "personal_care": "Close Personal Support",
+    "personal_care_desc": "Personal availability and quick response from your first request until you get the key.",
+    "custom_solutions": "Customized Solutions",
+    "custom_solutions_desc": "Tailoring the mortgage mix specifically to your current and future capabilities."
+  },
+  "Services": {
+    "title": "Our Services",
+    "new_mortgage": "New Mortgage",
+    "new_mortgage_desc": "Guidance for first-time buyers or upgraders with stable and secure planning.",
+    "recycle": "Mortgage Refinancing",
+    "recycle_desc": "Checking the viability of refinancing an existing loan to reduce monthly payments.",
+    "viability": "Viability Check",
+    "viability_desc": "Free objective review of the mortgage terms offered to you by the bank.",
+    "bank_escort": "Bank Negotiation",
+    "bank_escort_desc": "Conducting tough interest rate bids between banks to achieve the best terms."
+  },
+  "Reviews": {
+    "title": "What Our Clients Say",
+    "r1_name": "Ohr and Daniel",
+    "r1_text": "I couldn't believe we could save so much - highly recommended! The process was simple and relaxing.",
+    "r2_name": "The Cohen Family",
+    "r2_text": "We arrived confused and left with a mortgage 150,000 NIS cheaper than what the bank offered us alone.",
+    "r3_name": "Ron Shahar",
+    "r3_text": "Humane, reliable, and professional service. You simply took all the stress and worries off our shoulders."
+  },
+  "Process": {
+    "title": "How does it work?",
+    "step1": "Initial Consultation",
+    "step1_desc": "Getting to know your financial capabilities and characterizing your needs.",
+    "step2": "Data Review",
+    "step2_desc": "Collecting paperwork and checking repayment ability responsibly.",
+    "step3": "Mix Planning",
+    "step3_desc": "Economical and safe route planning tailored for you.",
+    "step4": "Support to Approval",
+    "step4_desc": "Negotiating with the banks, signing, and receiving the money."
+  },
+  "FAQ": {
+    "title": "Questions & Answers",
+    "q1": "How much can I save?",
+    "a1": "An average savings of tens to hundreds of thousands of shekels over the life of the mortgage, depending on the loan amount and market conditions.",
+    "q2": "How long does the process take?",
+    "a2": "Usually between two weeks and a month, depending on document availability and bank approval.",
+    "q3": "Is there a commitment in the first meeting?",
+    "a3": "No, the initial consultation and eligibility check are provided for free and without any commitment.",
+    "q4": "Will it work for me if I don't have a large down payment?",
+    "a4": "Absolutely. There are creative financing solutions that responsibly combine complementary loans."
+  },
+  "FinalCTA": {
+    "title": "Want to know how much you can save?",
+    "subtitle": "Fill in the details and we will check your eligibility - free and without obligation."
+  },
+  "Calculator": {
+    "title": "Mortgage Calculator",
+    "amount": "Loan Amount (₪)",
+    "interest": "Annual Interest (%)",
+    "years": "Period (Years)",
+    "calculate": "Calculate",
+    "monthly_payment": "Estimated Monthly Payment:"
+  },
+  "Contact": {
+    "title": "Leave your details and we will get back to you shortly",
+    "name": "Full Name",
+    "phone": "Phone",
+    "email": "Email (Optional)",
+    "message": "Message",
+    "submit": "Send",
+    "success": "Message sent successfully!",
+    "error": "An error occurred. Please try again.",
+    "validation": {
+      "name_required": "Name is required",
+      "phone_required": "Phone is required",
+      "phone_invalid": "Invalid phone format"
+    }
+  },
+  "Footer": {
+    "desc": "Personalized mortgage consulting ensuring the best rates and easiest process.",
+    "rights": "All rights reserved."
+  },
+  "Locales": {
+    "he": "עברית",
+    "en": "English",
+    "am": "አማርኛ"
+  },
+  "About": {
+    "badge": "About",
+    "title": "Turning the Dream of a Home",
+    "title_highlight": "into a Smart Financial Reality",
+    "description_1": "Welcome to Mortgage Pro. As a business lender and certified mortgage advisor with many years of experience in the banking system, my vision is to lead families safely to their dream homes while maintaining their financial stability.",
+    "description_2": "After seeing how the system works from the inside, I decided to move to your side. My goal is to simplify the complex world of mortgages and ensure you receive the best terms and rates available on the market today.",
+    "why_choose_me": "Why Choose Me?",
+    "benefit_1": "Rich experience as a former mortgage manager at a leading bank",
+    "benefit_2": "Rigorous interest rate tender and full personal support",
+    "benefit_3": "Absolute objectivity and deep familiarity with all institutions",
+    "benefit_4": "Personal availability and fast response throughout the process",
+    "exp_years": "10+",
+    "exp_label": "Years of Banking Experience"
+  },
+  "Auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "admin_dashboard": "Dashboard",
+    "leads": "Leads Management",
+    "clients": "Clients Management",
+    "builder": "Mix Builder"
+  }
+}
